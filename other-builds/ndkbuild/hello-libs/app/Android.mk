@@ -1,3 +1,21 @@
+abspath_wa = $(join $(filter %:,$(subst :,: ,$1)),$(abspath $(filter-out %:,$(subst :,: ,$1))))
+
+LOCAL_PATH := $(call my-dir)
+JNI_SRC_PATH := $(call abspath_wa, $(LOCAL_PATH)/../../../../hello-libs/app/src/main/cpp)
+
+include $(CLEAR_VARS)
+ifeq ($(NDK_DEBUG),1)
+	LOVR_LIB_SUFFIX=d
+	LOVR_LIB_CONFIG=debug
+else
+	LOVR_LIB_SUFFIX=
+	LOVR_LIB_CONFIG=release
+endif
+LOCAL_MODULE := buildtest
+LOCAL_SRC_FILES := $(LOCAL_PATH)/../cmakelib/build/intermediates/cmake/$(LOVR_LIB_CONFIG)/obj/$(TARGET_ARCH_ABI)/libbuildtest.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+
 # Copyright (C) 2010 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,10 +30,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-abspath_wa = $(join $(filter %:,$(subst :,: ,$1)),$(abspath $(filter-out %:,$(subst :,: ,$1))))
-
-LOCAL_PATH := $(call my-dir)
-JNI_SRC_PATH := $(call abspath_wa, $(LOCAL_PATH)/../../../../hello-libs/app/src/main/cpp)
 include $(CLEAR_VARS)
 
 # config distributed lib path
@@ -40,7 +54,7 @@ LOCAL_MODULE    := hello-libs
 LOCAL_SRC_FILES := $(JNI_SRC_PATH)/hello-libs.cpp
 LOCAL_LDLIBS    := -llog -landroid
 LOCAL_STATIC_LIBRARIES := local_gmath
-LOCAL_SHARED_LIBRARIES := local_gperf
+LOCAL_SHARED_LIBRARIES := local_gperf buildtest
 
 include $(BUILD_SHARED_LIBRARY)
 
