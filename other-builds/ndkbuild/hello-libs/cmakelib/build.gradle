@@ -1,0 +1,22 @@
+apply plugin: 'com.android.library'
+
+android {
+  compileSdkVersion 28
+
+  defaultConfig {
+		minSdkVersion 14
+		targetSdkVersion 28
+	}
+
+	sourceSets {
+		main {
+			manifest.srcFile 'AndroidManifest.xml'
+		}
+	}
+
+	externalNativeBuild {
+		cmake {
+			path "CMakeLists.txt"
+		}
+	}
+}

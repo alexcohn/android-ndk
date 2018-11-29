@@ -4,6 +4,10 @@
 
 apply plugin: 'com.android.application'
 
+dependencies {
+  implementation project(':cmakelib')
+}
+
 // pointing to cmake's source code for the same project
 def REMOTE_SRC_ROOT = '../../../../' + rootProject.getName() + '/' +
         project.getName() + '/src/main'
