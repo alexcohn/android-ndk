@@ -12,9 +12,13 @@ else
 	LOVR_LIB_CONFIG=release
 endif
 LOCAL_MODULE := buildtest
-LOCAL_SRC_FILES := $(LOCAL_PATH)/../cmakelib/build/intermediates/cmake/$(LOVR_LIB_CONFIG)/obj/$(TARGET_ARCH_ABI)/libbuildtest.so
-include $(PREBUILT_SHARED_LIBRARY)
-
+LOCAL_SRC_FILES := ../cmakelib/build/intermediates/cmake/$(LOVR_LIB_CONFIG)/obj/$(TARGET_ARCH_ABI)/libbuildtest.so
+ifneq ($(wildcard $(LOCAL_SRC_FILES)),)
+  include $(PREBUILT_SHARED_LIBRARY)
+else
+  LOCAL_SRC_FILES :=
+  include $(BUILD_SHARED_LIBRARY)
+endif
 
 # Copyright (C) 2010 The Android Open Source Project
 #
