@@ -1,7 +1,5 @@
-abspath_wa = $(join $(filter %:,$(subst :,: ,$1)),$(abspath $(filter-out %:,$(subst :,: ,$1))))
-
 LOCAL_PATH := $(call my-dir)
-JNI_SRC_PATH := $(call abspath_wa, $(LOCAL_PATH)/../../../../hello-libs/app/src/main/cpp)
+JNI_SRC_PATH := ../../../../hello-libs/app/src/main/cpp
 
 include $(CLEAR_VARS)
 ifeq ($(NDK_DEBUG),1)
@@ -13,7 +11,7 @@ else
 endif
 LOCAL_MODULE := buildtest
 LOCAL_SRC_FILES := ../cmakelib/build/intermediates/cmake/$(LOVR_LIB_CONFIG)/obj/$(TARGET_ARCH_ABI)/libbuildtest.so
-ifneq ($(wildcard $(LOCAL_SRC_FILES)),)
+ifneq ($(wildcard $(LOCAL_PATH)/$(LOCAL_SRC_FILES)),)
   include $(PREBUILT_SHARED_LIBRARY)
 else
   LOCAL_SRC_FILES :=
@@ -37,18 +35,18 @@ endif
 include $(CLEAR_VARS)
 
 # config distributed lib path
-EXT_LIB_ROOT := $(call abspath_wa, $(LOCAL_PATH)/../../../../hello-libs/distribution)
+EXT_LIB_ROOT := ../../../../hello-libs/distribution
 
 # import 2 libs: remember to generate them SEPARATELY in terminal/command line first!
 LOCAL_MODULE := local_gmath
 LOCAL_SRC_FILES := $(EXT_LIB_ROOT)/gmath/lib/$(TARGET_ARCH_ABI)/libgmath.a
-LOCAL_EXPORT_C_INCLUDES := $(EXT_LIB_ROOT)/gmath/include
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/$(EXT_LIB_ROOT)/gmath/include
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := local_gperf
 LOCAL_SRC_FILES := $(EXT_LIB_ROOT)/gperf/lib/$(TARGET_ARCH_ABI)/libgperf.so
-LOCAL_EXPORT_C_INCLUDES := $(EXT_LIB_ROOT)/gperf/include
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/$(EXT_LIB_ROOT)/gperf/include
 include $(PREBUILT_SHARED_LIBRARY)
 
 # build our app's shared lib
