@@ -13,8 +13,7 @@ Description
 -----------
 The sample includes 3 modules:
 *    app -- imports a shared library (libgperf.so) and a static library (libgmath.a) from a prefab AAR
-*    distribution -- container for the prefab AAR
-*    gen-libs -- contains the source code and CMake build script for the gmath and gperf example libraries. The resulting binaries are prefabbed into `distribution` folder.
+*    gen-libs -- contains the source code and CMake build script for the gmath and gperf example libraries. The resulting binaries are prefabbed into the normal output AAR.
 
 The main goal of the sample is to demo how to use 3rd party libs, it is not to demonstrate lib package generation. Toward that goal, the pre-built AAR is included in the `distribution` folder.
 

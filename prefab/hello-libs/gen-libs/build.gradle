@@ -32,23 +32,14 @@ android {
     }
 }
 
-["Debug", "Release"].forEach { variant ->
-    task "bundle${variant}PrefabAar"(type: Zip) {
-        archiveFileName = "gen-libs-prefab-${variant.toLowerCase()}.aar"
-        destinationDirectory = file('../distribution')
-        into ("prefab") { from fileTree("build/prefab") }
-        into ("prefab") { from file("src/main/cpp") include "prefab.json" }
-        into ("prefab/modules") { from fileTree("src/main/cpp") include "*/module.json" }
-        into ("") { from file("src/main") include "AndroidManifest.xml" }
-    }
-}
-
 afterEvaluate {
-    bundleDebugPrefabAar.dependsOn mergeDebugNativeLibs
-    bundleReleasePrefabAar.dependsOn mergeReleaseNativeLibs
-
-    assembleDebug.dependsOn bundleDebugPrefabAar
-    assembleRelease.dependsOn bundleReleasePrefabAar
+    ["Debug", "Release"].forEach { variant ->
+        "bundle${variant}Aar" {
+            into ("prefab") { from fileTree("build/prefab") }
+            into ("prefab") { from file("src/main/cpp") include "prefab.json" }
+            into ("prefab/modules") { from fileTree("src/main/cpp") include "*/module.json" }
+        }
+    }
 }
 
 dependencies {

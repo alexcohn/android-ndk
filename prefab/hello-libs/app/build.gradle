@@ -32,5 +32,6 @@ android {
 
 dependencies {
     implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation project(':distribution')
+    implementation project(':gen-libs') // does not trigger Prefab
+    implementation files('../gen-libs/build/outputs/aar/gen-libs-debug.aar') // comment this to see that project dependency is not enough
 }
