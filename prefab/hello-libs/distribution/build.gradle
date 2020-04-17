@@ -1,5 +1,2 @@
 configurations.maybeCreate("default")
 artifacts.add("default", file('./gen-libs-prefab-debug.aar'))
-if (!file('./gen-libs-prefab-debug.aar').exists()) {
-    println("Please run ':gen-libs:bundleDebugPrefabAar'")
-}

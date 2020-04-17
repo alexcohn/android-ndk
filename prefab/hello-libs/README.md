@@ -12,11 +12,11 @@ This sample uses the [Android Studio CMake plugin](http://tools.android.com/tech
 Description
 -----------
 The sample includes 3 modules:
-*    app -- imports a shared library (libgperf.so) and a static library (libgmath.a) from a prefab AAR
-*    distribution -- container for the prefab AAR
-*    gen-libs -- contains the source code and CMake build script for the gmath and gperf example libraries. The resulting binaries are prefabbed into `distribution` folder.
+*    app -- imports a shared library (libgperf.so) and a static library (libgmath.a) from a prefab AAR. It has no cross-module awareness.
+*    distribution -- dumb container for the prefab AAR
+*    gen-libs -- contains the source code and CMake build script for the gmath and gperf example libraries. The resulting binaries are prefabbed into `distribution` folder. This module is aware that it needs to take care of cross-module synchronization.
 
-The main goal of the sample is to demo how to use 3rd party libs, it is not to demonstrate lib package generation. Toward that goal, the pre-built AAR is included in the `distribution` folder.
+The main goal of the sample is to demo how to work with C++ dependency accross two modules.
 
 When importing libraries into your app, include the following in your app's `CMakeLists.txt` file (in the following order): 
 

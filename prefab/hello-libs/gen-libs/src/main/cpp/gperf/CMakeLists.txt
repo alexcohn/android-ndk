@@ -14,34 +14,8 @@
 # limitations under the License.
 #
 
-# Build one shared lib. When we build, we set the bin to $user/tmp, and
-# remove it after build complete, so only the distribution place could be
-# used for application linking.
-
 cmake_minimum_required(VERSION 3.4.1)
 
 set(CMAKE_VERBOSE_MAKEFILE on)
 
 add_library(gperf SHARED src/gperf.c)
-
-# copy out the lib binary
-set(distribution_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../../build/prefab/modules)
-string(REPLACE "android-" "" ANDROID_API ${ANDROID_PLATFORM})
-
-set_target_properties(gperf
-                      PROPERTIES
-                      LIBRARY_OUTPUT_DIRECTORY
-                      "${distribution_DIR}/gperf/libs/android.${ANDROID_ABI}")
-
-add_custom_command(TARGET gperf POST_BUILD
-
-                   COMMAND "${CMAKE_COMMAND}" -E
-                   copy "${CMAKE_CURRENT_SOURCE_DIR}/src/gperf.h"
-                   "${distribution_DIR}/gperf/include/gperf.h"
-
-                   COMMAND "${CMAKE_COMMAND}" -E
-                   echo '{\"abi\":\"'${ANDROID_ABI}'\",\"api\":'${ANDROID_API}',\"ndk\":21,\"stl\":\"none\"}' >
-                   "${distribution_DIR}/gperf/libs/android.${ANDROID_ABI}/abi.json"
-
-                   COMMENT "Copying gperf to output directory")
-
