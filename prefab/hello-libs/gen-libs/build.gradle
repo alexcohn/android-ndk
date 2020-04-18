@@ -47,10 +47,8 @@ task seedPrefabTree {
             for (abi in ["x86", "x86_64", "armeabi-v7a", "arm64-v8a"]) {
                 file("${libs}/android.${abi}").mkdirs()
                 if (isFirstSync) {
-                    println "touch " + file("${libs}/android.${abi}/lib${lib}")
                     file("${libs}/android.${abi}/lib${lib}").write("")
                 } else if (file("${libs}/android.${abi}/lib${lib}").exists()) {
-                    println "remove " + file("${libs}/android.${abi}/lib${lib}")
                     file("${libs}/android.${abi}/lib${lib}").delete()
                 }
                 file("${libs}/android.${abi}/abi.json").
@@ -81,13 +79,6 @@ for (variant in ["Debug", "Release"]) {
         }
         into ("prefab") { from file("build/prefab") }
         into ("") { from file("src/main") include "AndroidManifest.xml" }
-
-        doLast {
-            println "ls -${file('../distribution/')}".execute().text
-
-//            println ("ls -l " + file("${destinationDirectory.properties.get('provider').get().getAsFile()}/${archiveFileName.properties.get('provider').get()}")).execute().text
-////            throw GradleException("stop")
-        }
     }
 }
 
@@ -95,9 +86,6 @@ if (!file('../distribution/gen-libs-prefab-debug.aar').exists()) {
     bundleDebugPrefabAar.getActions().get(0).execute(bundleDebugPrefabAar)
     seedPrefabTree.getActions().get(0).execute(seedPrefabTree)
     bundleDebugPrefabAar.getActions().get(1).execute(bundleDebugPrefabAar)
-}
-else {
-    println "ls -l ${file('../distribution/gen-libs-prefab-debug.aar')}".execute().text
 }
 
 afterEvaluate {
@@ -108,9 +96,6 @@ afterEvaluate {
     assembleRelease.dependsOn bundleReleasePrefabAar
 
     project(':app').tasks.findByName('preDebugBuild').dependsOn bundleDebugPrefabAar
-    project(':app').tasks.findByName('preDebugBuild').doLast {
-        println "ls -l ${file('../distribution/gen-libs-prefab-debug.aar')}".execute().text
-    }
     project(':app').tasks.findByName('preReleaseBuild').dependsOn bundleReleasePrefabAar
 }
 
