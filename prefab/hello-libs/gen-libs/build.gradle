@@ -33,7 +33,7 @@ android {
 }
 
 afterEvaluate {
-    ["Debug", "Release"].forEach { variant ->
+    for (variant in["Debug", "Release"]) {
         "bundle${variant}Aar" {
             into ("prefab") { from fileTree("build/prefab") }
             into ("prefab") { from file("src/main/cpp") include "prefab.json" }
