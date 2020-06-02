@@ -29,19 +29,12 @@ set(distribution_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../../build/prefab/module
 string(REPLACE "android-" "" ANDROID_API ${ANDROID_PLATFORM})
 
 set_target_properties(gperf
-                      PROPERTIES
-                      LIBRARY_OUTPUT_DIRECTORY
-                      "${distribution_DIR}/gperf/libs/android.${ANDROID_ABI}")
+        PROPERTIES
+        LIBRARY_OUTPUT_DIRECTORY
+        "${distribution_DIR}/gperf/libs/android.${ANDROID_ABI}")
 
-add_custom_command(TARGET gperf POST_BUILD
+file(WRITE
+        "${distribution_DIR}/gperf/libs/android.${ANDROID_ABI}/abi.json"
+        "{\"abi\":\"${ANDROID_ABI}\",\"api\":${ANDROID_API},\"ndk\":21,\"stl\":\"none\"}")
 
-                   COMMAND "${CMAKE_COMMAND}" -E
-                   copy "${CMAKE_CURRENT_SOURCE_DIR}/src/gperf.h"
-                   "${distribution_DIR}/gperf/include/gperf.h"
-
-                   COMMAND "${CMAKE_COMMAND}" -E
-                   echo '{\"abi\":\"'${ANDROID_ABI}'\",\"api\":'${ANDROID_API}',\"ndk\":21,\"stl\":\"none\"}' >
-                   "${distribution_DIR}/gperf/libs/android.${ANDROID_ABI}/abi.json"
-
-                   COMMENT "Copying gperf to output directory")
-
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/src/gperf.h" DESTINATION "${distribution_DIR}/gperf/include")
