@@ -31,18 +31,25 @@ android {
             path 'src/main/cpp/CMakeLists.txt'
         }
     }
-}
 
-afterEvaluate {
-    for (variant in["Debug", "Release"]) {
-        "bundle${variant}Aar" {
-            into ("prefab") { from fileTree("build/prefab") }
-            into ("prefab") { from file("src/main/cpp") include "prefab.json" }
-            into ("prefab/modules") { from fileTree("src/main/cpp") include "*/module.json" }
+    buildFeatures {
+        prefabPublishing true
+    }
+
+    prefab {
+        gmath {
+            headers "src/main/cpp/gmath/src/"
         }
+        gperf {
+            headers "src/main/cpp/gperf/src/"
+        }
+    }
+
+    packagingOptions {
+        exclude "prefab/modules/gperf/include/gperf.c"
     }
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
 }

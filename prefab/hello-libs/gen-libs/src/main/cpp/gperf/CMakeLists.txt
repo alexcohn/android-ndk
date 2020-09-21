@@ -23,18 +23,3 @@ cmake_minimum_required(VERSION 3.4.1)
 set(CMAKE_VERBOSE_MAKEFILE on)
 
 add_library(gperf SHARED src/gperf.c)
-
-# copy out the lib binary
-set(distribution_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../../build/prefab/modules)
-string(REPLACE "android-" "" ANDROID_API ${ANDROID_PLATFORM})
-
-set_target_properties(gperf
-        PROPERTIES
-        LIBRARY_OUTPUT_DIRECTORY
-        "${distribution_DIR}/gperf/libs/android.${ANDROID_ABI}")
-
-file(WRITE
-        "${distribution_DIR}/gperf/libs/android.${ANDROID_ABI}/abi.json"
-        "{\"abi\":\"${ANDROID_ABI}\",\"api\":${ANDROID_API},\"ndk\":21,\"stl\":\"none\"}")
-
-file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/src/gperf.h" DESTINATION "${distribution_DIR}/gperf/include")

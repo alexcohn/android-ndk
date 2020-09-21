@@ -24,7 +24,7 @@ When importing libraries into your app, include the following in your app's `CMa
 
 Pre-requisites
 --------------
-- Android Studio 4.0.0 with [NDK](https://developer.android.com/ndk/).
+- Android Studio 4.2 with [NDK](https://developer.android.com/ndk/).
 
 Getting Started
 ---------------

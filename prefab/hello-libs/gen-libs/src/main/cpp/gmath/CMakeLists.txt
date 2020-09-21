@@ -23,18 +23,3 @@ cmake_minimum_required(VERSION 3.4.1)
 set(CMAKE_VERBOSE_MAKEFILE on)
 
 add_library(gmath STATIC src/gmath.c)
-
-# copy out the lib binary...
-set(distribution_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../../build/prefab/modules)
-string(REPLACE "android-" "" ANDROID_API ${ANDROID_PLATFORM})
-
-set_target_properties(gmath
-        PROPERTIES
-        ARCHIVE_OUTPUT_DIRECTORY
-        "${distribution_DIR}/gmath/libs/android.${ANDROID_ABI}")
-
-file(WRITE
-        "${distribution_DIR}/gmath/libs/android.${ANDROID_ABI}/abi.json"
-        "{\"abi\":\"${ANDROID_ABI}\",\"api\":${ANDROID_API},\"ndk\":21,\"stl\":\"none\"}")
-
-file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/src/gmath.h" DESTINATION "${distribution_DIR}/gmath/include")
