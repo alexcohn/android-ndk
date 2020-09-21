@@ -4,13 +4,13 @@ Android Neural Networks API Sample
 The samples demonstrate how to use Android NNAPI exported through Android NDK:
 
 - basic: showcase the main NNAPI concept from Android 8
-- sequence: showcase the advanced features added in Android 11
+- sequence(in the "develop" branch): showcase the advanced features added in Android 11
 
 Check each module's README.md for additional descriptions and additional requirements.
 
 Pre-requisites
 --------------
-- Android Studio 3.0+.
+- Android Studio 4.0+.
 - NDK r16+.
 - Android API 27+.
 
